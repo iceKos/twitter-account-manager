@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div v-else style="display:flex;align-items:center;justify-content:end;width: 100%;">
-                <a-popconfirm title="Are you you want to Synchronize your account?" ok-text="Yes" cancel-text="No"
+                <a-popconfirm title="Are you want to Synchronize your account?" ok-text="Yes" cancel-text="No"
                     @confirm="confirmSync">
                     <a-button style="margin-left: 10px;" type="">Sync Account Twitter</a-button>
                 </a-popconfirm>
@@ -32,25 +32,17 @@
             <div style="display:flex" id="tweet-box">
                 <div style="flex:1">
                     <a-form>
-                        <a-textarea v-model:value="tweet_content" placeholder="What's happening?"
-                            :auto-size="{ minRows: 5 }" />
+
+                        <a-form-item>
+                            <a-textarea :showCount="true" :maxlength="character_limit" v-model:value="tweet_content"
+                                placeholder="What's happening?" :auto-size="{ minRows: 5 }" />
+                        </a-form-item>
                         <a-form-item label="Quote Tweet">
                             <a-switch v-model:checked="quote_tweet_status" @change="disableQuoteTweet" />
                         </a-form-item>
                         <a-form-item label="Quote Tweet ID" v-if="quote_tweet_status == true">
                             <a-input v-model:value="quote_tweet_id" />
                         </a-form-item>
-                        <!-- <a-form-item name="upload" label="Upload Media">
-                            <a-upload  name="logo" 
-                                list-type="picture">
-                                <a-button>
-                                    <template #icon>
-                                        <UploadOutlined />
-                                    </template>
-                                    Click to upload
-                                </a-button>
-                            </a-upload>
-                        </a-form-item> -->
                         <a-form-item name="upload" label="Upload Media">
                             <a-upload-dragger :file-list="fileList" :supportServerRender="false" :showUploadList="false"
                                 :multiple="false" accept="image/png, image/jpeg ,image/gif ,video/mp4"
@@ -266,8 +258,9 @@ export default defineComponent({
                 })
         }
     },
-    data(): { preview_show: boolean, media_id?: string, url?: string, media_type: string, fileList: any[], user_id: string, record: any, tweet_content: string, quote_tweet_status: boolean, quote_tweet_id?: string } {
+    data(): { character_limit: Number, preview_show: boolean, media_id?: string, url?: string, media_type: string, fileList: any[], user_id: string, record: any, tweet_content: string, quote_tweet_status: boolean, quote_tweet_id?: string } {
         return {
+            character_limit: 280,
             preview_show: false,
             media_id: undefined,
             url: undefined,
