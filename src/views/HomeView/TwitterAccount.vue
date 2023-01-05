@@ -16,8 +16,8 @@
                 </div>
             </div>
             <div v-else style="display:flex;align-items:center;justify-content:end;width: 100%;">
-                <a-popconfirm title="Are you sure delete this Account?" ok-text="Yes" cancel-text="No"
-                    @confirm="confirmDelete">
+                <a-popconfirm title="Are you you want to Synchronize your account?" ok-text="Yes" cancel-text="No"
+                    @confirm="confirmSync">
                     <a-button style="margin-left: 10px;" type="">Sync Account Twitter</a-button>
                 </a-popconfirm>
                 <a-popconfirm title="Are you sure delete this Account?" ok-text="Yes" cancel-text="No"
@@ -113,7 +113,7 @@ import { defineComponent, ref } from 'vue';
 import { useAccountTwitterStore } from "@/stores/account_twitter.store"
 import { useGlobalStore } from '@/stores/global';
 import { message } from 'ant-design-vue';
-
+import router from "@/router";
 import { TwitterOutlined, UploadOutlined } from '@ant-design/icons-vue';
 import axios from 'axios';
 export default defineComponent({
@@ -178,7 +178,9 @@ export default defineComponent({
                     this.record = find_user
                     this.globalStore.closeLoading()
                 }, 200);
-
+            } else {
+                this.globalStore.closeLoading()
+                router.push("/home")
             }
         },
         authenTwitterApp(url: string) {
@@ -230,7 +232,38 @@ export default defineComponent({
             }
         },
         confirmDelete() {
-            message.success("Delete Success")
+            this.globalStore.openLoading()
+            axios.post(import.meta.env.VITE_API_ENDPOINT + "/api/twitter/delete_twitter_account/" + this.user_id)
+                .then((response) => {
+                    this.globalStore.closeLoading()
+                    if (response.data.status == true) {
+                        message.success(response.data.data)
+                        this.accountTwitterStore.fetchTwitterAccount()
+                    } else {
+                        message.error(response.data.message)
+                    }
+                })
+                .catch((error) => {
+                    this.globalStore.closeLoading()
+                    message.error(error.message)
+                })
+        },
+        confirmSync() {
+            this.globalStore.openLoading()
+            axios.get(import.meta.env.VITE_API_ENDPOINT + "/api/twitter/sync-profile/" + this.user_id)
+                .then((response) => {
+                    this.globalStore.closeLoading()
+                    if (response.data.status == true) {
+                        message.success(response.data.data)
+                        this.accountTwitterStore.fetchTwitterAccount()
+                    } else {
+                        message.error(response.data.message)
+                    }
+                })
+                .catch((error) => {
+                    this.globalStore.closeLoading()
+                    message.error(error.message)
+                })
         }
     },
     data(): { preview_show: boolean, media_id?: string, url?: string, media_type: string, fileList: any[], user_id: string, record: any, tweet_content: string, quote_tweet_status: boolean, quote_tweet_id?: string } {

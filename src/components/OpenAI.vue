@@ -24,6 +24,7 @@ export default defineComponent({
     methods: {
         getResultOpenAIBypropmt() {
             this.loading = true
+            this.open_ai_result = ""
             axios.post(import.meta.env.VITE_API_ENDPOINT + "/api/twitter/openAI_tweet", { prompt: this.prompt })
                 .then(async (data: any) => {
                     

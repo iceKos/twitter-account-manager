@@ -44,13 +44,14 @@ export const useAccountTwitterStore = defineStore("account_twitter", () => {
     return twitter_account.value
   }
 
-  function fetchTwitterAccount() {
+  function fetchTwitterAccount(cb = () => { }) {
     globalStore.openLoading()
     axios.get(import.meta.env.VITE_API_ENDPOINT + "/api/twitter/get_twitter_account")
       .then((data: any) => {
         var { data } = data
         twitter_account.value = data.data
         globalStore.closeLoading()
+        cb()
       })
   }
   return {
