@@ -13,16 +13,18 @@
         <a-menu v-model:selectedKeys="selectedKeys2" v-model:openKeys="openKeys" mode="inline"
           :style="{ height: '100%', borderRight: 0 }">
 
-          <a-sub-menu key="sub2">
+          <a-sub-menu key="sub2" ref="menu_twitter_account" id="menu_twitter_account">
             <template #title>
               <span>
                 <twitter-outlined class="icon-custom-position" />
                 <span>Twitter Account</span>
               </span>
             </template>
-            <a-menu-item v-for="(account, index) in accountTwitterStore.getTwitterAccount()"
-              :key="index" @click="goTo(`/home/account/${account.id}`)">
-              <span :style="{color:(account.access_token == null) ? 'rgb(255 40 40)' : 'none'}">{{ account.name }}</span></a-menu-item>
+            <a-menu-item v-for="(account, index) in accountTwitterStore.getFavoriteAccount()" :key="account.id"
+              @click="goTo(`/home/account/${account.id}`)">
+              <span :style="{ color: (account.access_token == null) ? 'rgb(255 40 40)' : 'none' }">{{
+                account.name
+              }}</span></a-menu-item>
             <a-menu-item key="create-account" @click="createAccount()">
               <span>
                 <plus-square-outlined class="icon-custom-position" />
@@ -38,8 +40,8 @@
           <a-breadcrumb-item v-for="(item, index) of breadcrumb" :key="index">{{ item }}</a-breadcrumb-item>
         </a-breadcrumb>
         <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-         
-          <AccountListCard v-if="$route.path == '/home'"/>
+
+          <AccountListCard v-if="$route.path == '/home'" />
           <router-view v-else :key="$route.path" />
         </a-layout-content>
       </a-layout>
@@ -75,11 +77,17 @@ export default defineComponent({
   watch: {
     $route(to, from) {
       this.setBreadcrumb(to.fullPath)
-    }
+    },
+    'accountTwitterStore.$state.account_favorite': {
+      handler: function (newVal) {
+        localStorage.setItem("account_favorite", JSON.stringify(newVal));
+      },
+      deep: true
+    },
   },
   async created() {
     this.setBreadcrumb(this.$route.fullPath)
-    await this.accountTwitterStore.fetchTwitterAccount()
+    this.accountTwitterStore.fetchTwitterAccount() 
   }
   ,
   methods: {
@@ -106,6 +114,12 @@ export default defineComponent({
         .then(async (data: any) => {
           this.accountTwitterStore.fetchTwitterAccount()
         })
+    },
+    checkFavorite(user_id: string) {
+      if (this.accountTwitterStore.$state.account_favorite.includes(user_id)) {
+        return true
+      }
+      return false
     }
   },
   data(): { breadcrumb: string[], twitter_account: any[] } {
@@ -118,14 +132,14 @@ export default defineComponent({
     var accountTwitterStore = useAccountTwitterStore()
     var globalStore = useGlobalStore()
     return {
-      selectedKeys1: ref<string[]>(['2']),
+      selectedKeys1: ref<string[]>(['1']),
       selectedKeys2: ref<string[]>(['1']),
       collapsed: ref<boolean>(false),
-      openKeys: ref<string[]>(['sub1']),
+      openKeys: ref<string[]>(['sub2']),
       accountTwitterStore,
       globalStore
     };
-  },
+  }
 });
 </script>
 <style>
