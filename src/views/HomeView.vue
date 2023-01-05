@@ -2,7 +2,7 @@
 
   <a-layout style="width: 100%;">
     <a-layout-header class="header">
-      <div class="logo"> Nakamoto Twitter</div>
+      <div class="logo"> <router-link to="/home">Nakamoto Twitter</router-link></div>
       <div>
         <a-button type="primary" @click="globalStore.openDrawerRight()">
           OpenAI</a-button>
@@ -38,7 +38,9 @@
           <a-breadcrumb-item v-for="(item, index) of breadcrumb" :key="index">{{ item }}</a-breadcrumb-item>
         </a-breadcrumb>
         <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <router-view :key="$route.path" />
+         
+          <AccountListCard v-if="$route.path == '/home'"/>
+          <router-view v-else :key="$route.path" />
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -60,13 +62,15 @@ import axios from "axios"
 import { useAccountTwitterStore } from "@/stores/account_twitter.store"
 import { useGlobalStore } from '@/stores/global';
 import OpenAI from "@/components/OpenAI.vue"
+import AccountListCard from "@/views/HomeView/AccountListCard.vue"
 export default defineComponent({
   components: {
     UserOutlined,
     TwitterOutlined,
     NotificationOutlined,
     PlusSquareOutlined,
-    OpenAI
+    OpenAI,
+    AccountListCard
   },
   watch: {
     $route(to, from) {

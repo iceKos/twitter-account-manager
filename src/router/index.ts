@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginPage from "../views/LoginPage.vue"
 import TwitterAccount from "../views/HomeView/TwitterAccount.vue"
-
+import PageNotFound from "../views/PageNotFound.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -35,8 +35,7 @@ const router = createRouter({
           component: TwitterAccount
         }
       ]
-    },
-  ]
+    }, { path: "/:catchAll(.*)", component: PageNotFound }]
 })
 
 
