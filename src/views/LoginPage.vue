@@ -51,6 +51,9 @@ import { defineComponent, reactive, computed } from 'vue'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import axios from 'axios'
 import { message } from 'ant-design-vue'
+import { useGlobalStore } from '@/stores/global';
+import { useUserStore } from "@/stores/users.store"
+import router from '@/router';
 interface FormStateLogin {
     email: string
     password: string
@@ -62,23 +65,35 @@ export default defineComponent({
         LockOutlined
     },
     setup() {
+
+        var globalStore = useGlobalStore()
+        var userStore = useUserStore()
         const formState = reactive<FormStateLogin>({
             email: '',
             password: '',
             remember: true
         })
         const onFinish = (values: FormStateLogin) => {
-
+            globalStore.openLoading()
             axios.put(import.meta.env.VITE_API_ENDPOINT + "/api/admin/auth/authentication", { "data": values })
                 .then((response) => {
+                    globalStore.closeLoading()
                     if (response.data.status == true) {
+                        userStore.setUser(response.data.data)
                         message.success("login success")
+                        router.push({ name: "home" })
                     } else {
                         message.warning(response.data.message)
                     }
                 }).catch((err) => {
-                    message.error(err.message)
+                    globalStore.closeLoading()
+                    if (err.response?.data) {
+                        message.error(err.response?.data.message)
+                    } else {
+                        message.error(err.message)
+                    }
                 })
+
         }
 
         const onFinishFailed = (errorInfo: any) => {
@@ -91,7 +106,9 @@ export default defineComponent({
             formState,
             onFinish,
             onFinishFailed,
-            disabled
+            disabled,
+            globalStore,
+            useUserStore
         }
     }
 })

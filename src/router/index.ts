@@ -3,11 +3,16 @@ import HomeView from '../views/HomeView.vue'
 import LoginPage from "../views/LoginPage.vue"
 import TwitterAccount from "../views/HomeView/TwitterAccount.vue"
 import PageNotFound from "../views/PageNotFound.vue"
+import { useUserStore } from "@/stores/users.store"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
+      redirect: "/login",
+    },
+    {
+      path: '/login',
       name: 'login',
       component: LoginPage
     },
@@ -38,5 +43,19 @@ const router = createRouter({
     }, { path: "/:catchAll(.*)", component: PageNotFound }]
 })
 
+router.beforeEach(async (to) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ["/login"];
+  const authRequired = !publicPages.includes(to.path);
+  const user_store = useUserStore()
+  console.log(to.path, authRequired, user_store.$state.user);
+
+  if (authRequired && !user_store.$state.user) {
+    return "/login";
+  } else if (to.path == "/login" && user_store.$state.user) {
+    return "/home";
+  }
+
+})
 
 export default router

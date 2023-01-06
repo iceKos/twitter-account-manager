@@ -24,7 +24,7 @@
                         {{ account.name }}
                     </div>
                     <div style="text-align:center;font-size:16px;font-weight: 300;margin-top:0px;color: #7a7474;">
-                        @{{ account.username }}
+                        <span @click="goToAccount(account.username)" style="cursor: pointer;">@{{ account.username }}</span>
                     </div>
 
                     <HeartFilled @click="accountTwitterStore.accountFavorite(account.id)"
@@ -74,6 +74,9 @@ export default defineComponent({
         };
     },
     methods: {
+        goToAccount(username: string) {
+            window.open(`https://twitter.com/${username}`)
+        },
         authenTwitterApp(url: string) {
             window.open(url)
         },
