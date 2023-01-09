@@ -3,14 +3,12 @@
         <a-popconfirm title="you want to create new acount?" ok-text="Yes" cancel-text="No" @confirm="createAccount()">
             <a-button style="margin-right:10px;" >Create Account</a-button>
         </a-popconfirm>
-        
         <div>
             <a-input-search v-model:value="search_value" placeholder="search account" style="width: 200px"
                 @search="() => { }" />
         </div>
     </div>
     <div id="box-all-account">
-
         <a-row>
             <a-col style="padding:20px;" :lg="6" :md="12" :sm="12" :xs="24" v-for="(account, index) in accountTwitterStore.getTwitterAccount().filter((x: any) => {
                 return new RegExp(search_value, 'ig').test(x.name + x.username)
