@@ -47,7 +47,7 @@
                             <a-form-item name="select" label="Tweet ID">
                                 <a-input-group compact>
                                     <a-input v-model:value="tweet_id" style="width: calc(100% - 200px)" />
-                                    <a-button type="primary">Submit</a-button>
+                                    
                                 </a-input-group>
                             </a-form-item>
                         </a-form>
