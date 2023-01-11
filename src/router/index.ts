@@ -38,7 +38,17 @@ const router = createRouter({
           path: 'account/:user_id',
           name: "account",
           component: TwitterAccount
-        }
+        },
+        {
+          path: 'boots-likes',
+          name: "boots-likes",
+          component: () => import('../views/HomeView/BootLikes.vue')
+        },
+        {
+          path: 'boots-quote-tweet',
+          name: "boots-quote-tweet",
+          component: () => import('../views/HomeView/BootsQuoteTweet.vue')
+        },
       ]
     }, { path: "/:catchAll(.*)", component: PageNotFound }]
 })

@@ -17,9 +17,6 @@ export const useAccountTwitterStore = defineStore("account_twitter", () => {
   var account_favorite: any = ref(initAccountFavorite)
   var globalStore = useGlobalStore()
   function setListAccount(twitter_account_list: any[]) {
-    console.log(twitter_account_list);
-
-
     twitter_account.value = twitter_account_list
   }
 
@@ -38,7 +35,11 @@ export const useAccountTwitterStore = defineStore("account_twitter", () => {
     axios.get(import.meta.env.VITE_API_ENDPOINT + "/api/twitter/get_twitter_account")
       .then((data: any) => {
         var { data } = data
-        twitter_account.value = data.data
+        twitter_account.value = data.data.map((x:any,index:number) => {
+          x.key = index.toString()
+          x.disabled = false
+          return x
+        })
         globalStore.closeLoading()
         cb()
       })

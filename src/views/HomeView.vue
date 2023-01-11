@@ -32,7 +32,14 @@
               </span>
             </a-menu-item>
           </a-sub-menu>
-
+          <a-sub-menu key="sub2">
+            <template #icon>
+              <ToolFilled />
+            </template>
+            <template #title>Twitter Tools</template>
+            <a-menu-item key="5"  @click="goTo(`/home/boots-likes`)">Boots Likes</a-menu-item>
+            <a-menu-item key="6" @click="goTo(`/home/boots-quote-tweet`)">Boots Quote Tweet</a-menu-item>
+          </a-sub-menu>
         </a-menu>
       </a-layout-sider>
       <a-layout style="padding: 0 24px 24px">
@@ -56,7 +63,8 @@
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
-import { UserOutlined, TwitterOutlined, PlusSquareOutlined, NotificationOutlined } from '@ant-design/icons-vue';
+// <tool-outlined />
+import { UserOutlined, TwitterOutlined, PlusSquareOutlined, NotificationOutlined ,ToolFilled} from '@ant-design/icons-vue';
 import { defineComponent, ref } from 'vue';
 import { RouterView } from 'vue-router'
 import router from "@/router";
@@ -69,6 +77,7 @@ export default defineComponent({
   components: {
     UserOutlined,
     TwitterOutlined,
+    ToolFilled,
     NotificationOutlined,
     PlusSquareOutlined,
     OpenAI,
@@ -87,7 +96,7 @@ export default defineComponent({
   },
   async created() {
     this.setBreadcrumb(this.$route.fullPath)
-    this.accountTwitterStore.fetchTwitterAccount() 
+    this.accountTwitterStore.fetchTwitterAccount()
   }
   ,
   methods: {
