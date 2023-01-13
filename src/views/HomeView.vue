@@ -38,7 +38,7 @@
             </template>
             <template #title>Twitter Tools</template>
             <a-menu-item key="5"  @click="goTo(`/home/boots-likes`)">Boots Likes</a-menu-item>
-            <a-menu-item key="6" @click="goTo(`/home/boots-quote-tweet`)">Boots Quote Tweet</a-menu-item>
+            <!-- <a-menu-item key="6" @click="goTo(`/home/boots-quote-tweet`)">Boots Quote Tweet</a-menu-item> -->
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>

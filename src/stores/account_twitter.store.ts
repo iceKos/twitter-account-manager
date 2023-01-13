@@ -5,8 +5,6 @@ import { ref } from 'vue';
 
 export const useAccountTwitterStore = defineStore("account_twitter", () => {
   var getLocalStorageAccountFavorite = localStorage.getItem("account_favorite")
-  console.log(getLocalStorageAccountFavorite);
-
 
   let initAccountFavorite = []
 
@@ -35,7 +33,7 @@ export const useAccountTwitterStore = defineStore("account_twitter", () => {
     axios.get(import.meta.env.VITE_API_ENDPOINT + "/api/twitter/get_twitter_account")
       .then((data: any) => {
         var { data } = data
-        twitter_account.value = data.data.map((x:any,index:number) => {
+        twitter_account.value = data.data.map((x: any, index: number) => {
           x.key = index.toString()
           x.disabled = false
           return x
@@ -54,6 +52,12 @@ export const useAccountTwitterStore = defineStore("account_twitter", () => {
       account_favorite.value = account_favorite.value.filter((x: any) => x != user_id)
     }
   }
+
+  function accountVerified(): Array<any> {
+    return twitter_account.value.filter((x: any) => {
+      return x.twitter_user_id != null
+    })
+  }
   return {
     setListAccount,
     getTwitterAccount,
@@ -61,6 +65,7 @@ export const useAccountTwitterStore = defineStore("account_twitter", () => {
     getFavoriteAccount,
     accountFavorite,
     twitter_account,
-    account_favorite
+    account_favorite,
+    accountVerified
   }
 })
