@@ -10,8 +10,8 @@
             <div v-if="current == 0">
                 <div>
                     <a-typography-title :level="3">Select your account you want to boot like tweet </a-typography-title>
-                    <a-transfer v-model:target-keys="targetKeys" :data-source="accountTwitterStore.accountVerified()" style="padding:20px"
-                        :show-search="true"
+                    <a-transfer v-model:target-keys="targetKeys" :data-source="accountTwitterStore.accountVerified()"
+                        style="padding:20px" :show-search="true"
                         :filter-option="(inputValue: any, item: any) => item.title.indexOf(inputValue) !== -1"
                         :show-select-all="true" @change="onChange" pagination>
                         <template #children="{
@@ -52,15 +52,16 @@
                     </div>
 
                     <div style="flex:1" class="padding-20">
-                        <a-empty v-if="tweet_id == ''"/>
-                        <Tweet v-else :key="tweet_id" cards="hidden" conversation="none" lang="en" theme="light" align="center"
-                            @tweet-load-success="onTweetLoadSuccess" :width="650" :dnt="false" :tweet-id="tweet_id"
-                            @tweet-load-error="onTweetLoadError">
+                        <a-empty v-if="tweet_id == ''" />
+                        <Tweet v-else :key="tweet_id" cards="hidden" conversation="none" lang="en" theme="light"
+                            align="center" @tweet-load-success="onTweetLoadSuccess" :width="650" :dnt="false"
+                            :tweet-id="tweet_id" @tweet-load-error="onTweetLoadError">
                             <template v-slot:loading>
                                 <a-skeleton active />
                             </template>
                             <template v-slot:error>
-                                <span>Sorry, that tweet doesn't exist!</span>
+                                <a-result status="error" title="Tweet Not Found"
+                                    sub-title="Please check your tweet id"/>
                             </template>
                         </Tweet>
                     </div>
