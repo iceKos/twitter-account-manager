@@ -3,6 +3,20 @@
         <div>
             <a-page-header class="demo-page-header" style="border: 1px solid rgb(235, 237, 240)"
                 title="Run Boots Process" sub-title="Boots Like">
+                <template #tags>
+                    <a-tag color="processing" v-if="process_stage == 'process'">
+                        <template #icon>
+                            <sync-outlined :spin="true" />
+                        </template>
+                        processing
+                    </a-tag>
+                    <a-tag color="success" v-if="process_stage == 'done'">
+                        <template #icon>
+                            <check-circle-outlined />
+                        </template>
+                        success
+                    </a-tag>
+                </template>
                 <template #extra>
                     <a-input-number v-model:value="delay_time" :step="1" :min="0" placeholder="Delay Time"
                         style="width:250px" addon-after="second" addon-before="Delay Time">
@@ -53,6 +67,9 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
 import { notification } from 'ant-design-vue';
+import {
+    SyncOutlined,CheckCircleOutlined
+} from '@ant-design/icons-vue';
 interface QueueRecord {
     id: string;
     status: string;
@@ -65,7 +82,7 @@ interface QueueRecord {
 }
 let intervalIdTimeRunning: any;
 export default defineComponent({
-    components: { QueueItem },
+    components: { QueueItem, SyncOutlined,CheckCircleOutlined },
     props: {
         tweet_id: {
             type: String,
@@ -83,7 +100,7 @@ export default defineComponent({
     created() {
         this.generateQueue()
     },
-    data(): { delay_time: Number, date_start: string, date_end: string, queue: Array<QueueRecord>, queue_filter: Array<QueueRecord>, tab_active: String, process_running: boolean } {
+    data(): { process_stage: string, delay_time: Number, date_start: string, date_end: string, queue: Array<QueueRecord>, queue_filter: Array<QueueRecord>, tab_active: String, process_running: boolean } {
         return {
             delay_time: 1,
             date_start: moment().format("YYYY-MM-DD HH:mm:ss"),
@@ -91,7 +108,8 @@ export default defineComponent({
             queue: [],
             queue_filter: [],
             tab_active: "all",
-            process_running: false
+            process_running: false,
+            process_stage: "pending"
         }
     },
     methods: {
@@ -133,6 +151,7 @@ export default defineComponent({
             this.queue_filter = this.queue
         },
         startRunningBoot() {
+            this.process_stage = "process"
             this.date_start = moment().format("YYYY-MM-DD HH:mm:ss")
             this.date_end = moment().format("YYYY-MM-DD HH:mm:ss")
             this.process_running = true
@@ -141,6 +160,7 @@ export default defineComponent({
         },
         stopRunningBoot() {
             this.process_running = false
+            
             clearInterval(intervalIdTimeRunning)
         },
         timeRunning() {
@@ -179,6 +199,7 @@ export default defineComponent({
                             duration: 20
                         });
                         this.stopRunningBoot()
+                        this.process_stage = 'done'
                     }
                 } else {
                     message.warning('Empty process to run boot');
