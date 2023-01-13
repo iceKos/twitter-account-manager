@@ -52,6 +52,7 @@ import QueueItem from "@/components/QueueItem.vue"
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
+import { notification } from 'ant-design-vue';
 interface QueueRecord {
     id: string;
     status: string;
@@ -171,6 +172,12 @@ export default defineComponent({
                     if (i < process_queue.length) {
                         setTimeout(loop, (Number(this.delay_time) * 1000));
                     } else {
+                        notification.success({
+                            message: 'Notification',
+                            description:
+                                'All processes are done.',
+                            duration: 20
+                        });
                         this.stopRunningBoot()
                     }
                 } else {
