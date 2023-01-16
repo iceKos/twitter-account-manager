@@ -9,7 +9,7 @@
         <div class="steps-content">
             <div v-if="current == 0">
                 <div>
-                    <a-typography-title :level="3">Select your account you want to boost like tweet </a-typography-title>
+                    <a-typography-title :level="3">Select your account you want to run boost like tweet </a-typography-title>
                     <a-transfer v-model:target-keys="targetKeys" :data-source="accountTwitterStore.accountVerified()"
                         style="padding:20px" :show-search="true"
                         :filter-option="(inputValue: any, item: any) => item.title.indexOf(inputValue) !== -1"
