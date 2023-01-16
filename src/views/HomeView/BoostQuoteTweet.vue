@@ -1,5 +1,5 @@
 <template>
-    <div>Boots Quote like</div>
+    <div>Boost Quote like</div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';

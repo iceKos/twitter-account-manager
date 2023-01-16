@@ -9,7 +9,7 @@
         <div class="steps-content">
             <div v-if="current == 0">
                 <div>
-                    <a-typography-title :level="3">Select your account you want to boot like tweet </a-typography-title>
+                    <a-typography-title :level="3">Select your account you want to run boost Re-Tweet </a-typography-title>
                     <a-transfer v-model:target-keys="targetKeys" :data-source="accountTwitterStore.accountVerified()"
                         style="padding:20px" :show-search="true"
                         :filter-option="(inputValue: any, item: any) => item.title.indexOf(inputValue) !== -1"
@@ -74,7 +74,7 @@
             </div>
             <div v-if="current == 2">
                 <div>
-                    <RunBootLikes :tweet_id="tweet_id" :account_twitter_selected="targetKeys" />
+                    <RunBootReTweet :tweet_id="tweet_id" :account_twitter_selected="targetKeys" />
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@ import { defineComponent, ref } from 'vue';
 import { message } from 'ant-design-vue';
 import Tweet from "vue-tweet";
 import { useAccountTwitterStore } from "@/stores/account_twitter.store"
-import RunBootLikes from "@/components/RunBootLikes.vue"
+import RunBootReTweet from "@/components/RunBootReTweet.vue"
 
 type tableColumn = Record<string, string>;
 
@@ -179,7 +179,7 @@ export default defineComponent({
                     content: 'Second-content',
                 },
                 {
-                    title: 'Process Boots like',
+                    title: 'Process Boost Re-Tweet',
                     content: 'Last-content',
                 },
             ],
@@ -194,7 +194,7 @@ export default defineComponent({
     },
     components: {
         Tweet,
-        RunBootLikes
+        RunBootReTweet
     },
     data() {
         return {

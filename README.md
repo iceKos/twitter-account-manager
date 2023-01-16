@@ -90,3 +90,8 @@ pnpm run lint
 ## License
 
 [MIT](./LICENSE) - [@xiaoluoboding](https://github.com/xiaoluoboding)
+
+
+# propmt OpenAI
+1. can you create short positive sentence for Nakamoto.games platform play to earn and add #NAKA , emoji
+2. can you make shot positive word

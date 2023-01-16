@@ -13,32 +13,21 @@
         <a-menu v-model:selectedKeys="selectedKeys2" v-model:openKeys="openKeys" mode="inline"
           :style="{ height: '100%', borderRight: 0 }">
 
-          <a-sub-menu key="sub2" ref="menu_twitter_account" id="menu_twitter_account">
-            <template #title>
-              <span>
-                <twitter-outlined class="icon-custom-position" />
-                <span>Twitter Account</span>
-              </span>
+          <a-menu-item key="twitter-account" @click="goTo(`/home`)">
+            <template #icon>
+              <twitter-outlined class="icon-custom-position" />
             </template>
-            <a-menu-item v-for="(account, index) in accountTwitterStore.getFavoriteAccount()" :key="account.id"
-              @click="goTo(`/home/account/${account.id}`)">
-              <span :style="{ color: (account.access_token == null) ? 'rgb(255 40 40)' : 'none' }">{{
-                account.name
-              }}</span></a-menu-item>
-            <a-menu-item key="create-account" @click="createAccount()">
-              <span>
-                <plus-square-outlined class="icon-custom-position" />
-                <span>Create Account</span>
-              </span>
-            </a-menu-item>
-          </a-sub-menu>
-          <a-sub-menu key="sub2">
+            <span>Twitter Account</span>
+          </a-menu-item>
+          <a-sub-menu key="twitter-tools">
             <template #icon>
               <ToolFilled />
             </template>
             <template #title>Twitter Tools</template>
-            <a-menu-item key="5"  @click="goTo(`/home/boots-likes`)">Boots Likes</a-menu-item>
-            <!-- <a-menu-item key="6" @click="goTo(`/home/boots-quote-tweet`)">Boots Quote Tweet</a-menu-item> -->
+            <a-menu-item key="boost-likes" @click="goTo(`/home/boost-likes`)">Boost Likes</a-menu-item>
+            <a-menu-item key="boost-retweet" @click="goTo(`/home/boost-retweet`)">Boost Re-Tweet</a-menu-item>
+            <!-- <a-menu-item key="boost-quote-tweet" @click="goTo(`/home/boost-quote-tweet`)">Boost Quote
+              Tweet</a-menu-item> -->
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>
@@ -64,7 +53,7 @@ function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 // <tool-outlined />
-import { UserOutlined, TwitterOutlined, PlusSquareOutlined, NotificationOutlined ,ToolFilled} from '@ant-design/icons-vue';
+import { UserOutlined, TwitterOutlined, PlusSquareOutlined, NotificationOutlined, ToolFilled } from '@ant-design/icons-vue';
 import { defineComponent, ref } from 'vue';
 import { RouterView } from 'vue-router'
 import router from "@/router";
@@ -144,7 +133,7 @@ export default defineComponent({
       selectedKeys1: ref<string[]>(['1']),
       selectedKeys2: ref<string[]>(['1']),
       collapsed: ref<boolean>(false),
-      openKeys: ref<string[]>(['sub2']),
+      openKeys: ref<string[]>(['twitter-tools']),
       accountTwitterStore,
       globalStore
     };

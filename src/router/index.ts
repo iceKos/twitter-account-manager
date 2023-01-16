@@ -40,14 +40,19 @@ const router = createRouter({
           component: TwitterAccount
         },
         {
-          path: 'boots-likes',
-          name: "boots-likes",
-          component: () => import('../views/HomeView/BootLikes.vue')
+          path: 'boost-likes',
+          name: "boost-likes",
+          component: () => import('../views/HomeView/BoostLikes.vue')
         },
         {
-          path: 'boots-quote-tweet',
-          name: "boots-quote-tweet",
-          component: () => import('../views/HomeView/BootsQuoteTweet.vue')
+          path: 'boost-retweet',
+          name: "boost-retweet",
+          component: () => import('../views/HomeView/BoostReTweet.vue')
+        },
+        {
+          path: 'boost-quote-tweet',
+          name: "boost-quote-tweet",
+          component: () => import('../views/HomeView/BoostQuoteTweet.vue')
         },
       ]
     }, { path: "/:catchAll(.*)", component: PageNotFound }]

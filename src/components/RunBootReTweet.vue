@@ -2,7 +2,7 @@
     <div>
         <div>
             <a-page-header class="demo-page-header" style="border: 1px solid rgb(235, 237, 240)"
-                title="Run Boost Process" sub-title="Boost Like">
+                title="Run Boost Process" sub-title="Boost Re-Tweet">
                 <template #tags>
                     <a-tag color="processing" v-if="process_stage == 'process'">
                         <template #icon>
@@ -23,7 +23,7 @@
                     </a-input-number>
                     <a-button @click="stopRunningBoot" v-if="process_running == true">Stop Boost</a-button>
                     <a-button @click="startRunningBoot" type="primary" v-if="process_running == false">Run
-                        boost</a-button>
+                        Boost</a-button>
 
                 </template>
                 <div style="display:flex">
@@ -68,7 +68,7 @@ import axios from 'axios';
 import { message } from 'ant-design-vue';
 import { notification } from 'ant-design-vue';
 import {
-    SyncOutlined,CheckCircleOutlined
+    SyncOutlined, CheckCircleOutlined
 } from '@ant-design/icons-vue';
 interface QueueRecord {
     id: string;
@@ -82,7 +82,7 @@ interface QueueRecord {
 }
 let intervalIdTimeRunning: any;
 export default defineComponent({
-    components: { QueueItem, SyncOutlined,CheckCircleOutlined },
+    components: { QueueItem, SyncOutlined, CheckCircleOutlined },
     props: {
         tweet_id: {
             type: String,
@@ -160,7 +160,7 @@ export default defineComponent({
         },
         stopRunningBoot() {
             this.process_running = false
-            
+
             clearInterval(intervalIdTimeRunning)
         },
         timeRunning() {
@@ -179,7 +179,7 @@ export default defineComponent({
                     currentProcess.loading = true
                     this.queue[find_index_inqueue] = currentProcess
                     try {
-                        await this.sendLikeAPI(currentProcess.user_id, currentProcess.tweet_id)
+                        await this.sendReTweetAPI(currentProcess.user_id, currentProcess.tweet_id)
                         currentProcess.status = 'pass'
 
                     } catch (error: any) {
@@ -208,11 +208,11 @@ export default defineComponent({
             }
             loop();
         },
-        sendLikeAPI(user_id: string, tweet_id: string) {
-            return axios.post(import.meta.env.VITE_API_ENDPOINT + "/api/twitter/like/tweet", { user_id, tweet_id })
+        sendReTweetAPI(user_id: string, tweet_id: string) {
+            return axios.post(import.meta.env.VITE_API_ENDPOINT + "/api/twitter/retweet", { user_id, tweet_id })
                 .then((response) => {
                     if (response.data.status == true) {
-                        return response.data.data.data.liked
+                        return response.data.data.data.retweeted
                     } else {
                         throw new Error(response.data.message);
                     }
