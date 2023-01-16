@@ -74,7 +74,7 @@
             </div>
             <div v-if="current == 2">
                 <div>
-                    <RunBootLikes :tweet_id="tweet_id" :account_twitter_selected="targetKeys" />
+                    <RunBoostLikes :tweet_id="tweet_id" :account_twitter_selected="targetKeys" />
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@ import { defineComponent, ref } from 'vue';
 import { message } from 'ant-design-vue';
 import Tweet from "vue-tweet";
 import { useAccountTwitterStore } from "@/stores/account_twitter.store"
-import RunBootLikes from "@/components/RunBootLikes.vue"
+import RunBoostLikes from "@/components/RunBoostLikes.vue"
 
 type tableColumn = Record<string, string>;
 
@@ -194,7 +194,7 @@ export default defineComponent({
     },
     components: {
         Tweet,
-        RunBootLikes
+        RunBoostLikes
     },
     data() {
         return {

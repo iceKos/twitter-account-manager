@@ -55,9 +55,8 @@ declare module 'vue' {
     LoadingScreen: typeof import('./src/components/LoadingScreen.vue')['default']
     OpenAI: typeof import('./src/components/OpenAI.vue')['default']
     QueueItem: typeof import('./src/components/QueueItem.vue')['default']
-    RunBootLikes: typeof import('./src/components/RunBootLikes.vue')['default']
-    'RunBootLikes copy': typeof import('./src/components/RunBootLikes copy.vue')['default']
-    RunBootReTweet: typeof import('./src/components/RunBootReTweet.vue')['default']
+    RunBoostLikes: typeof import('./src/components/RunBoostLikes.vue')['default']
+    RunBoostReTweet: typeof import('./src/components/RunBoostReTweet.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
