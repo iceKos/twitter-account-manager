@@ -168,8 +168,6 @@ export default defineComponent({
             return axios.post(import.meta.env.VITE_API_ENDPOINT + "/api/twitter/tweet", { user_id, quote_tweet_id: tweet_id, content, tweet_mode: "shadow_tweet" })
                 .then((response) => {
                     if (response.data.status == true) {
-                        console.log(response.data);
-
                         return true
                     } else {
                         throw new Error(response.data.message);

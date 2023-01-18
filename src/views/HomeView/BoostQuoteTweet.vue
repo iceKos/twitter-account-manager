@@ -133,15 +133,12 @@ const rightTableColumns = [
 export default defineComponent({
     methods: {
         onTweetLoadSuccess(embedNode: any) {
-            console.log("embedNode");
-
             this.load_tweet_content_success = false
         },
         onTweetLoadError(error: any) {
             this.load_tweet_content_success = true
         },
         submit_generate_content(queue_to_boost: Array<QueueRecord>) {
-            console.log("submit_generate_content working");
             this.queue_boost = queue_to_boost.map((item) => {
                 item.status = "pending"
                 return item
@@ -165,7 +162,7 @@ export default defineComponent({
         const rightColumns = ref<tableColumn[]>(rightTableColumns);
 
         const onChange = (nextTargetKeys: string[]) => {
-            console.log('nextTargetKeys', nextTargetKeys);
+            // console.log('nextTargetKeys', nextTargetKeys);
         };
 
         const getRowSelection = ({
@@ -185,8 +182,6 @@ export default defineComponent({
                     onItemSelectAll(treeSelectedKeys, selected);
                 },
                 onSelect({ key }: Record<string, string>, selected: boolean) {
-                    console.log(key, selected);
-
                     onItemSelect(key, selected);
                 },
                 selectedRowKeys: selectedKeys,

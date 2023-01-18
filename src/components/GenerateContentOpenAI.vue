@@ -124,7 +124,6 @@ export default defineComponent({
     },
     methods: {
         handleClickSubmitToParent() {
-            console.log("handleClickSubmitToParent working");
             this.$emit("submitEvent", this.queue_gen_content)
 
         },

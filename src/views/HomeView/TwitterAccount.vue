@@ -203,7 +203,6 @@ export default defineComponent({
 
             axios.post(import.meta.env.VITE_API_ENDPOINT + "/api/twitter/tweet", { ...madia_id, user_id: this.record.id, content: this.tweet_content, tweet_mode: "shadow_tweet", quote_tweet_id: this.quote_tweet_id })
                 .then((data) => {
-                    console.log(data.data);
                     if (data.data.status == true) {
                         message.success("Tweet Success")
                         window.open(`https://twitter.com/${this.record.username}/status/${data.data.data.data.id}`)

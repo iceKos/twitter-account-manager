@@ -113,8 +113,6 @@ const rightTableColumns = [
 export default defineComponent({
     methods: {
         onTweetLoadSuccess(embedNode: any) {
-            console.log("embedNode");
-
             this.load_tweet_content_success = false
         },
         onTweetLoadError(error: any) {
@@ -137,7 +135,7 @@ export default defineComponent({
         const rightColumns = ref<tableColumn[]>(rightTableColumns);
 
         const onChange = (nextTargetKeys: string[]) => {
-            console.log('nextTargetKeys', nextTargetKeys);
+            //console.log('nextTargetKeys', nextTargetKeys);
         };
 
         const getRowSelection = ({
@@ -157,8 +155,6 @@ export default defineComponent({
                     onItemSelectAll(treeSelectedKeys, selected);
                 },
                 onSelect({ key }: Record<string, string>, selected: boolean) {
-                    console.log(key, selected);
-
                     onItemSelect(key, selected);
                 },
                 selectedRowKeys: selectedKeys,

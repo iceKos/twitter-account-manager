@@ -63,8 +63,6 @@ router.beforeEach(async (to) => {
   const publicPages = ["/login"];
   const authRequired = !publicPages.includes(to.path);
   const user_store = useUserStore()
-  console.log(to.path, authRequired, user_store.$state.user);
-
   if (authRequired && !user_store.$state.user) {
     return "/login";
   } else if (to.path == "/login" && user_store.$state.user) {
