@@ -1,5 +1,5 @@
 <template>
-    <a-modal style="width:650px" v-model:visible="globalStore.modal_edit_prompt" title="Edit Prompt" @cancel="cancelEdit" @ok="saveAllPrompts">
+    <a-modal :okText="'Save'" style="width:650px" v-model:visible="globalStore.modal_edit_prompt" title="Edit Prompt" @cancel="cancelEdit" @ok="saveAllPrompts">
 
         <a-list item-layout="horizontal">
             <template #loadMore>
