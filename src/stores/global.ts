@@ -4,7 +4,9 @@ export const useGlobalStore = defineStore({
   id: 'global',
   state: () => ({
     loading: false,
-    drawer_right: false
+    drawer_right: false,
+    prompt:[],
+    modal_edit_prompt: false
   }),
   getters: {
     isLoading: (state) => state.loading
@@ -22,5 +24,8 @@ export const useGlobalStore = defineStore({
     closeDrawerRight() {
       this.drawer_right = false
     },
+    openModalEditPrompt() {
+      this.modal_edit_prompt = true
+    }
   }
 })

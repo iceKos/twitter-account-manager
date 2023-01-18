@@ -72,4 +72,8 @@ nav a:first-of-type {
     padding-right: calc(var(--section-gap) / 2);
   }
 }
+
+.ant-btn>span>svg{
+    margin-top: -6px;
+}
 </style>

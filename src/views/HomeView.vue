@@ -26,8 +26,8 @@
             <template #title>Twitter Tools</template>
             <a-menu-item key="boost-likes" @click="goTo(`/home/boost-likes`)">Boost Likes</a-menu-item>
             <a-menu-item key="boost-retweet" @click="goTo(`/home/boost-retweet`)">Boost Re-Tweet</a-menu-item>
-            <!-- <a-menu-item key="boost-quote-tweet" @click="goTo(`/home/boost-quote-tweet`)">Boost Quote
-              Tweet</a-menu-item> -->
+            <a-menu-item key="boost-quote-tweet" @click="goTo(`/home/boost-quote-tweet`)">Boost Quote
+              Tweet</a-menu-item>
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>

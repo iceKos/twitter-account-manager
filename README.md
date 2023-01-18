@@ -93,5 +93,5 @@ pnpm run lint
 
 
 # propmt OpenAI
-1. can you create short positive sentence for Nakamoto.games platform play to earn and add #NAKA , emoji
-2. can you make shot positive word
+1. can you create short positive good sentence for Nakamoto.games platform play to earn and add #NAKA , emoji
+2. can you make shot positive good word say to some platform and add emoji
