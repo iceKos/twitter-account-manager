@@ -18,8 +18,14 @@
                     </a-tag>
                 </template>
                 <template #extra>
-                    <a-input-number v-model:value="delay_time" :step="1" :min="0" placeholder="Delay Time"
-                        style="width:250px" addon-after="second" addon-before="Delay Time">
+                    <span style="color:red;font-size: 12px;">Recommend a minimum time of more than 30 sec to avoid being
+                        seen as a robot.</span>
+                    <a-input-number @blur="regenQueue" v-model:value="delay_range.start" :step="1" :min="0" placeholder="Delay Time"
+                        style="width:200px" addon-before="Delay Time">
+                    </a-input-number>
+                    <span>To</span>
+                    <a-input-number @blur="regenQueue" v-model:value="delay_range.end" :step="1" :min="delay_range.start + 1"
+                        placeholder="Delay Time" style="width:200px" addon-after="second">
                     </a-input-number>
                     <a-button @click="stopRunningBoot" v-if="process_running == true">Stop Boost</a-button>
                     <a-button @click="startRunningBoot" type="primary" v-if="process_running == false">Run
@@ -70,6 +76,7 @@ import { notification } from 'ant-design-vue';
 import {
     SyncOutlined, CheckCircleOutlined
 } from '@ant-design/icons-vue';
+import randomNumber from "@/helper/randomNumber"
 interface QueueRecord {
     id: string;
     status: string;
@@ -78,7 +85,8 @@ interface QueueRecord {
     username: string,
     name: string,
     loading: boolean;
-    error_message: string
+    error_message: string,
+    delay_time: Number
 }
 let intervalIdTimeRunning: any;
 export default defineComponent({
@@ -100,9 +108,13 @@ export default defineComponent({
     created() {
         this.generateQueue()
     },
-    data(): { process_stage: string, delay_time: Number, date_start: string, date_end: string, queue: Array<QueueRecord>, queue_filter: Array<QueueRecord>, tab_active: String, process_running: boolean } {
+    data(): { delay_range: { start: number, end: number }, process_stage: string, delay_time: Number, date_start: string, date_end: string, queue: Array<QueueRecord>, queue_filter: Array<QueueRecord>, tab_active: String, process_running: boolean } {
         return {
             delay_time: 1,
+            delay_range: {
+                start: 30,
+                end: 60
+            },
             date_start: moment().format("YYYY-MM-DD HH:mm:ss"),
             date_end: moment().format("YYYY-MM-DD HH:mm:ss"),
             queue: [],
@@ -145,7 +157,8 @@ export default defineComponent({
                     username: account.username,
                     name: account.name,
                     loading: false,
-                    error_message: ""
+                    error_message: "",
+                    delay_time: randomNumber(this.delay_range.start, this.delay_range.end)
                 })
             }
             this.queue_filter = this.queue
@@ -190,7 +203,7 @@ export default defineComponent({
                     this.queue[find_index_inqueue] = currentProcess
                     i++;
                     if (i < process_queue.length) {
-                        setTimeout(loop, (Number(this.delay_time) * 1000));
+                        setTimeout(loop, (Number(currentProcess.delay_time) * 1000));
                     } else {
                         notification.success({
                             message: 'Notification',
@@ -224,7 +237,13 @@ export default defineComponent({
                         throw new Error(error.message);
                     }
                 })
-        }
+        },
+        regenQueue() {
+            this.queue = this.queue.map((x) => {
+                x.delay_time = randomNumber(this.delay_range.start, this.delay_range.end)
+                return x
+            })
+        },
     },
     computed: {
         duration() {

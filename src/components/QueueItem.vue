@@ -11,16 +11,18 @@
                     <div><span style="font-weight: 800;">Tweet ID :</span> {{
                         queue_data.tweet_id
                     }}
-                        <div v-if="queue_data.error_message != ''"><span style="font-weight: 800;">Error message :</span>
+                        <div v-if="queue_data.error_message != ''"><span style="font-weight: 800;">Error message
+                                :</span>
                             <a-tag color="error" style="margin-left:5px">
                                 <template #icon>
                                     <exclamation-circle-outlined />
                                 </template>
-                                {{ queue_data.error_message }}
+                                {{ queue_data.error_message }} 
                             </a-tag>
                         </div>
 
                     </div>
+                    <div><span style="font-weight: 800;">Delay Time</span> {{ queue_data.delay_time }} second</div>
                 </div>
             </div>
             <div style="display:flex;align-items: center;">

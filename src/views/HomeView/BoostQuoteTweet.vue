@@ -108,6 +108,7 @@ interface QueueRecord {
     error_message: string;
     prompt: string;
     content: string;
+    delay_time: Number
 }
 
 const leftTableColumns = [
