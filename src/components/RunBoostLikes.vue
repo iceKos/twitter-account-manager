@@ -114,8 +114,8 @@ export default defineComponent({
         return {
             delay_time: 1,
             delay_range: {
-                start: 30,
-                end: 60
+                start: 20,
+                end: 40
             },
             date_start: moment().format("YYYY-MM-DD HH:mm:ss"),
             date_end: moment().format("YYYY-MM-DD HH:mm:ss"),
