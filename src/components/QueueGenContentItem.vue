@@ -8,7 +8,7 @@
                             queue_data.username
                         }})</a>
                     </div>
-                    <div><span style="font-weight: 800;">Tweet ID :</span> {{
+                    <div v-if="queue_data.tweet_id != ''"> <span style="font-weight: 800;">Tweet ID :</span> {{
                         queue_data.tweet_id
                     }}
                         <div v-if="queue_data.error_message != ''"><span style="font-weight: 800;">Error message :</span>
@@ -27,9 +27,10 @@
                         <div class="prompt-display" v-if="show_edit==true && input_edit_open == false"><EditFilled style="margin-left:5px;" @click="input_edit_open = true"/></div>
                         <div class="prompt-display" v-if="show_edit==true && input_edit_open == true"><CheckOutlined style="margin-left:5px;" @click="input_edit_open = false;show_edit = false"/></div>
                     </div>
-                    <div class="quote-tweet-display">
-                        <span style="font-weight: 800;">Quote tweet Content :</span> <a-tag @mouseenter="show_regen_text = true">{{ queue_data.content }}</a-tag>
-                        <sync-outlined class="sync-quote" v-if="show_regen_text==true"  style="margin-left:10px;" @click="getResultOpenAIByPrompt"/> 
+                    <div class="quote-tweet-display" style="display:flex;align-items: center;">
+                        <div style="font-weight: 800;flex:2">Quote tweet Content :</div> 
+                        <a-input size="small" style="min-width: 500px;flex:1"  v-model:value="queue_data.content" :bordered="true" placeholder="Borderless" />
+                        <sync-outlined class="sync-quote"   style="margin-left:10px;" @click="getResultOpenAIByPrompt"/> 
                     </div>
                 </div>
             </div>

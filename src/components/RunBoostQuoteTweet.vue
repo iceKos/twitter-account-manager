@@ -236,7 +236,7 @@ export default defineComponent({
             return prettyMilliseconds(diffTime)
         },
         progress_percentage() {
-            return Math.floor(((this.queue_boost.filter(x => x.status == 'pass').length / this.queue_boost.length) * 100))
+            return Math.floor(((this.queue.filter(x => x.status == 'pass').length / this.queue.length) * 100))
         }
     },
     created() {
