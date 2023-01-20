@@ -9,7 +9,7 @@
         <div class="steps-content">
             <div v-if="current == 0">
                 <div>
-                    <a-typography-title :level="3">Select your account you want to run boost <a-tag color="orange" style="font-size: 18px;font-weight: bold;">Quote Tweet</a-tag>
+                    <a-typography-title :level="3">Select your account you want to run boost <a-tag color="orange" style="font-size: 18px;font-weight: bold;">Tweet by AI</a-tag>
                     </a-typography-title>
                     <a-transfer v-model:target-keys="targetKeys" :data-source="accountTwitterStore.accountVerified()"
                         style="padding:20px" :show-search="true"
@@ -39,49 +39,16 @@
                 </div>
                 <div><a-button style="float:right" type="primary" @click="next">Next</a-button></div>
             </div>
+           
             <div v-if="current == 1">
-                <div style="display: flex;">
-                    <div style="flex:1" class="padding-20">
-                        <a-form>
-                            <a-form-item name="select" label="Tweet ID">
-                                <a-input-group compact>
-                                    <a-input v-model:value="tweet_id" placeholder="Enter your tweet ID" />
-
-                                </a-input-group>
-                            </a-form-item>
-                        </a-form>
-                    </div>
-
-                    <div style="flex:1" class="padding-20">
-                        <a-empty v-if="tweet_id == ''" />
-                        <Tweet v-else :key="tweet_id" cards="hidden" conversation="none" lang="en" theme="light"
-                            align="center" @tweet-load-success="onTweetLoadSuccess" :width="650" :dnt="false"
-                            :tweet-id="tweet_id" @tweet-load-error="onTweetLoadError">
-                            <template v-slot:loading>
-                                <a-skeleton active />
-                            </template>
-                            <template v-slot:error>
-                                <a-result status="error" title="Tweet Not Found"
-                                    sub-title="Please check your tweet id" />
-                            </template>
-                        </Tweet>
-                    </div>
-                </div>
                 <div>
-                    <a-button style="float:right;margin-left: 10px;" type="primary" @click="next"
-                        :disabled="load_tweet_content_success || tweet_id == ''">Next</a-button>
-                    <a-button style="float:right" type="primary" @click="prev">Prev</a-button>
+                    <GenerateContentOpenAI @submit-event="submit_generate_content" :tweet_id="tweet_id"
+                        :account_twitter_selected="targetKeys" :prompt_type="'prompts_tweet'"/>
                 </div>
             </div>
             <div v-if="current == 2">
                 <div>
-                    <GenerateContentOpenAI @submit-event="submit_generate_content" :tweet_id="tweet_id"
-                        :account_twitter_selected="targetKeys" :prompt_type="'prompts_quote_tweet'" />
-                </div>
-            </div>
-            <div v-if="current == 3">
-                <div>
-                    <RunBoostQuoteTweet :tweet_id="tweet_id" :queue_boost="queue_boost" />
+                    <RunBoostTweet :tweet_id="tweet_id" :queue_boost="queue_boost" />
                 </div>
             </div>
         </div>
@@ -94,7 +61,7 @@ import Tweet from "vue-tweet";
 import { useAccountTwitterStore } from "@/stores/account_twitter.store"
 import RunBoostReTweet from "@/components/RunBoostReTweet.vue"
 import GenerateContentOpenAI from "@/components/GenerateContentOpenAI.vue"
-import RunBoostQuoteTweet from "@/components/RunBoostQuoteTweet.vue"
+import RunBoostTweet from "@/components/RunBoostTweet.vue"
 type tableColumn = Record<string, string>;
 
 interface QueueRecord {
@@ -144,7 +111,7 @@ export default defineComponent({
                 item.status = "pending"
                 return item
             })
-            this.current = 3
+            this.current = 2
         }
     },
     setup() {
@@ -199,10 +166,6 @@ export default defineComponent({
                     content: 'First-content',
                 },
                 {
-                    title: 'Select your Tweet',
-                    content: 'Second-content',
-                },
-                {
                     title: 'Generate Content by AI',
                     content: 'Second-content',
                 },
@@ -224,7 +187,7 @@ export default defineComponent({
         Tweet,
         RunBoostReTweet,
         GenerateContentOpenAI,
-        RunBoostQuoteTweet
+        RunBoostTweet
     },
     data(): { tweet_id: string, load_tweet_content_success: boolean, queue_boost: Array<QueueRecord> } {
         return {

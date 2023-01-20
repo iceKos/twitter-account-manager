@@ -58,7 +58,7 @@
             </a-page-header>
         </div>
         <div>
-            <EditPrompt />
+            <EditPrompt :prompt_type="prompt_type" />
         </div>
 
     </div>
@@ -106,6 +106,12 @@ export default defineComponent({
                 return ""
             }
         },
+        prompt_type: {
+            type: String,
+            default() {
+                return ""
+            }
+        },
     },
     components: { SyncOutlined, SettingOutlined, QueueGenContentItem, EditPrompt },
     created() {
@@ -148,8 +154,9 @@ export default defineComponent({
         },
         async generateQueue() {
             this.process_stage = "process"
+
             for (const account of this.accounts) {
-                let prompt = randomItemFromArray(this.promptStore.prompts)
+                let prompt = randomItemFromArray(this.promptStore.getPropmtsSet(this.prompt_type))
                 var object_result = {
                     id: uuidv4(),
                     status: "pending",

@@ -9,7 +9,8 @@
         <div class="steps-content">
             <div v-if="current == 0">
                 <div>
-                    <a-typography-title :level="3">Select your account you want to run boost <a-tag color="orange" style="font-size: 18px;font-weight: bold;">Quote Tweet</a-tag>
+                    <a-typography-title :level="3">Select your account you want to run boost <a-tag color="orange"
+                            style="font-size: 18px;font-weight: bold;">Reply by AI</a-tag>
                     </a-typography-title>
                     <a-transfer v-model:target-keys="targetKeys" :data-source="accountTwitterStore.accountVerified()"
                         style="padding:20px" :show-search="true"
@@ -76,12 +77,12 @@
             <div v-if="current == 2">
                 <div>
                     <GenerateContentOpenAI @submit-event="submit_generate_content" :tweet_id="tweet_id"
-                        :account_twitter_selected="targetKeys" :prompt_type="'prompts_quote_tweet'" />
+                        :account_twitter_selected="targetKeys" :prompt_type="'prompts_reply_tweet'" />
                 </div>
             </div>
             <div v-if="current == 3">
                 <div>
-                    <RunBoostQuoteTweet :tweet_id="tweet_id" :queue_boost="queue_boost" />
+                    <RunBoostReplyTweet :tweet_id="tweet_id" :queue_boost="queue_boost" />
                 </div>
             </div>
         </div>
@@ -94,7 +95,7 @@ import Tweet from "vue-tweet";
 import { useAccountTwitterStore } from "@/stores/account_twitter.store"
 import RunBoostReTweet from "@/components/RunBoostReTweet.vue"
 import GenerateContentOpenAI from "@/components/GenerateContentOpenAI.vue"
-import RunBoostQuoteTweet from "@/components/RunBoostQuoteTweet.vue"
+import RunBoostReplyTweet from "@/components/RunBoostReplyTweet.vue"
 type tableColumn = Record<string, string>;
 
 interface QueueRecord {
@@ -224,7 +225,7 @@ export default defineComponent({
         Tweet,
         RunBoostReTweet,
         GenerateContentOpenAI,
-        RunBoostQuoteTweet
+        RunBoostReplyTweet
     },
     data(): { tweet_id: string, load_tweet_content_success: boolean, queue_boost: Array<QueueRecord> } {
         return {

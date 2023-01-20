@@ -44,6 +44,11 @@ const router = createRouter({
           name: "boost-likes",
           component: () => import('../views/HomeView/BoostLikes.vue')
         },
+         {
+          path: 'boost-tweet',
+          name: "boost-tweet",
+          component: () => import('../views/HomeView/BoostTweet.vue')
+        },
         {
           path: 'boost-retweet',
           name: "boost-retweet",
@@ -53,6 +58,11 @@ const router = createRouter({
           path: 'boost-quote-tweet',
           name: "boost-quote-tweet",
           component: () => import('../views/HomeView/BoostQuoteTweet.vue')
+        },
+        {
+          path: 'reply-by-ai',
+          name: "reply-by-ai",
+          component: () => import('../views/HomeView/BoostReplyTweet.vue')
         },
       ]
     }, { path: "/:catchAll(.*)", component: PageNotFound }]

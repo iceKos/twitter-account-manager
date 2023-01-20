@@ -1,5 +1,6 @@
 <template>
-    <a-modal :okText="'Save'" style="width:650px" v-model:visible="globalStore.modal_edit_prompt" title="Edit Prompt" @cancel="cancelEdit" @ok="saveAllPrompts">
+    <a-modal :okText="'Save'" style="width:650px" v-model:visible="globalStore.modal_edit_prompt" title="Edit Prompt"
+        @cancel="cancelEdit" @ok="saveAllPrompts">
 
         <a-list item-layout="horizontal">
             <template #loadMore>
@@ -9,7 +10,8 @@
             </template>
             <a-list-item v-for="(item, index) in current_prompt" :key="index">
                 <template #actions>
-                    <span key="list-action-delete" style="color:crimson;cursor: pointer;" @click="delete_prompt(index)">Delete</span>
+                    <span key="list-action-delete" style="color:crimson;cursor: pointer;"
+                        @click="delete_prompt(index)">Delete</span>
                 </template>
                 <a-list-item-meta>
                     <template #title>
@@ -35,6 +37,10 @@ export default defineComponent({
         edit_prompt_modal: {
             type: Boolean,
             default: false
+        },
+        prompt_type: {
+            type: String,
+            default: ""
         }
     },
     setup() {
@@ -47,31 +53,31 @@ export default defineComponent({
     },
     methods: {
         delete_prompt(index: Number) {
-            this.current_prompt = this.current_prompt.filter((item,key)=>{
-                return key!=index
+            this.current_prompt = this.current_prompt.filter((item, key) => {
+                return key != index
             })
         },
-        addPrompt(){
+        addPrompt() {
             this.current_prompt.push("Enter your prompt")
         },
         saveAllPrompts() {
-            this.promptStore.setPropmts(this.current_prompt)
+            this.promptStore.setPropmts(this.current_prompt, this.prompt_type)
             this.orignal_prompt = this.current_prompt
             message.success("Prompt has been saved")
 
         },
-        cancelEdit(){
-            this.promptStore.setPropmts(this.orignal_prompt)
+        cancelEdit() {
+            this.promptStore.setPropmts(this.orignal_prompt, this.prompt_type)
         }
     },
-    data() :{orignal_prompt:Array<string>,current_prompt:Array<string>} {
+    data(): { orignal_prompt: Array<string>, current_prompt: Array<string> } {
         return {
             orignal_prompt: [],
             current_prompt: []
         }
     },
     created() {
-        this.orignal_prompt = JSON.parse(JSON.stringify(this.promptStore.prompts))
+        this.orignal_prompt = JSON.parse(JSON.stringify(this.promptStore.getPropmtsSet(this.prompt_type)))
         this.current_prompt = this.orignal_prompt
     }
 })

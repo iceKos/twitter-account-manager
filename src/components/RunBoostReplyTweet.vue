@@ -2,7 +2,7 @@
     <div>
         <div>
             <a-page-header class="demo-page-header" style="border: 1px solid rgb(235, 237, 240)"
-                title="Run Boost Process" sub-title="Boost Quote Tweet">
+                title="Run Boost Process" sub-title="Reply Tweet By AI">
                 <template #tags>
                     <a-tag color="processing" v-if="process_stage == 'process'">
                         <template #icon>
@@ -90,7 +90,7 @@ import {
     SyncOutlined, CheckCircleOutlined
 } from '@ant-design/icons-vue';
 export default defineComponent({
-    components: { SyncOutlined, CheckCircleOutlined,QueueItem },
+    components: { QueueItem, SyncOutlined, CheckCircleOutlined },
     props: {
         queue_boost: {
             type: Array<QueueRecord>,
@@ -182,7 +182,7 @@ export default defineComponent({
             loop();
         },
         sendQuoteTweetAPI(user_id: string, tweet_id: string, content: string) {
-            return axios.post(import.meta.env.VITE_API_ENDPOINT + "/api/twitter/tweet", { user_id, quote_tweet_id: tweet_id, content, tweet_mode: "shadow_tweet" })
+            return axios.post(import.meta.env.VITE_API_ENDPOINT + "/api/twitter/reply", { user_id, tweet_id, content, tweet_mode: "shadow_tweet" })
                 .then((response) => {
                     if (response.data.status == true) {
                         return true
